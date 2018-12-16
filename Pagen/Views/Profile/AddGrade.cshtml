@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Выставить оценку";
+    if (User.Identity.IsAuthenticated)
+    {
+        if (User.Identity.Name == "decanat")
+        {
+            Layout = "~/Views/Decanat/Decanat_Layout.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Shared/Authorized_Layout.cshtml";
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/NotAuthorized_Layout.cshtml";
+    }
+}
+
+<h2>Выставить оценку</h2>
+
+@using (Html.BeginForm())
+{
+    if ((bool)ViewData["existSubjects"])
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.Label("studentId", "Студент")
+                <div class="col-md-10">
+                    @Html.DropDownList("studentId", (SelectList)ViewData["students"])
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("subjectId", "Предмет")
+                <div class="col-md-10">
+                    @Html.DropDownList("subjectId", (SelectList)ViewData["subjects"])
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="text" placeholder="Оценка.." name="rate" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="text" placeholder="Описание.." name="discription" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Поставить" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>У вас нет предметов, обратитесь в деканат.</p>
+    }
+}

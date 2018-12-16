@@ -1,0 +1,68 @@
+﻿@using Pagen.Models.Identity
+@model IEnumerable<Pagen.Models.Identity.Grade>
+
+@{
+    ViewBag.Title = "SearchUser";
+    if (User.Identity.IsAuthenticated)
+    {
+        if (User.Identity.Name == "decanat")
+        {
+            Layout = "~/Views/Decanat/Decanat_Layout.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Shared/Authorized_Layout.cshtml";
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/NotAuthorized_Layout.cshtml";
+    }
+}
+
+@if ((bool)ViewData["existStudent"])
+{
+    Student student = (Student)ViewData["student"];
+
+    <h2>@student.FullName</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject.NameSubject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discription)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (Grade item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject.NameSubject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discription)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h2>Студент не найден</h2>
+    <hr />
+    <p>
+        Шаблон запроса: [Группа] [Фамилия] [Имя]
+    </p>
+    <p>
+        Пример запроса: "716 Рындин Денис"
+    </p>
+}

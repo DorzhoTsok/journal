@@ -1,0 +1,34 @@
+﻿@{
+    if (User.Identity.IsAuthenticated)
+    {
+        if (User.Identity.Name == "decanat")
+        {
+            Layout = "~/Views/Decanat/Decanat_Layout.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Shared/Authorized_Layout.cshtml";
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/NotAuthorized_Layout.cshtml";
+    }
+}
+@section Css{
+    @Styles.Render(Url.Content("~/Content/my/index.css"))
+}
+<div class="about">
+    <p>Упеваемость студента.</p>
+    @using (Html.BeginForm("SearchUser", "Home", FormMethod.Get))
+    {
+        <input type="text" placeholder="Группа.." name="group" />
+        <input type="text" placeholder="Фамилия.." name="surname" />
+        <input type="text" placeholder="Имя.." name="name" />
+
+        <input type="submit" value="Найти" />
+    }
+</div>
+<footer>
+    <div class="copyright text-center p-2">&copy; Менеджер 2018</div>
+</footer>

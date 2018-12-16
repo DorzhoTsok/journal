@@ -1,0 +1,45 @@
+﻿@using Pagen.Models.Identity
+@model IEnumerable<Pagen.Models.Identity.Subject>
+
+@{
+    ViewBag.Title = "Мои предметы";
+    if (User.Identity.IsAuthenticated)
+    {
+        if (User.Identity.Name == "decanat")
+        {
+            Layout = "~/Views/Decanat/Decanat_Layout.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Shared/Authorized_Layout.cshtml";
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/NotAuthorized_Layout.cshtml";
+    }
+}
+
+<h2>Мои предметы</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameSubject)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (Subject item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameSubject)
+            </td>
+            <td>
+                @Html.ActionLink("Открыть", "OpenSubject", new {subjectId = item.Id})
+            </td>
+        </tr>
+    }
+
+</table>

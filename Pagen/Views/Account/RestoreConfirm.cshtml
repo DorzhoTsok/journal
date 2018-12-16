@@ -1,0 +1,38 @@
+﻿@model Pagen.Models.RestoreModel
+
+
+@{
+    ViewBag.Title = "Восстановление";
+    Layout = "~/Views/Shared/NotAuthorized_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Восстановление</h4>
+        <hr/>
+        Аккаунт: @Model.Email
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        <div class="form-group">
+            @Html.HiddenFor(model => model.Email)
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Code)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewPassword)
+            <div>
+                @Html.EditorFor(model => model.NewPassword, new {htmlAttributes = new {@class = "form-control", required = "required"}})
+                @Html.ValidationMessageFor(model => model.NewPassword, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Восстановить" class="btn"/>
+            </div>
+        </div>
+    </div>
+}

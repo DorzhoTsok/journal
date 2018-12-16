@@ -1,0 +1,69 @@
+﻿@using Pagen.Models.Identity
+@model IEnumerable<Pagen.Models.Identity.Grade>
+
+@{
+    ViewBag.Title = "Текущий предмет";
+    if (User.Identity.IsAuthenticated)
+    {
+        if (User.Identity.Name == "decanat")
+        {
+            Layout = "~/Views/Decanat/Decanat_Layout.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Shared/Authorized_Layout.cshtml";
+        }
+    }
+    else
+    {
+        Layout = "~/Views/Shared/NotAuthorized_Layout.cshtml";
+    }
+}
+
+<h2>@ViewData["subjectName"]</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.Group)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discription)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (Grade item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Group)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discription)
+            </td>
+            <td>
+                @Html.ActionLink("Удалить", "DeleteGrade", new { idGrade = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

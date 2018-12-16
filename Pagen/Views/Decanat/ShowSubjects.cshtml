@@ -1,0 +1,40 @@
+﻿@using Pagen.Models.Identity
+@model IEnumerable<Pagen.Models.Identity.Subject>
+
+@{
+    ViewBag.Title = "ShowSubjects";
+    Layout = "~/Views/Decanat/Decanat_Layout.cshtml";
+}
+
+<h2>Предметы</h2>
+
+<p>
+    @Html.ActionLink("Добавить новый", "AddSubject")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameSubject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (Subject item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameSubject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+            </td>
+            <td>
+                @Html.ActionLink("Удалить", "DeleteSubject", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
